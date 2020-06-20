@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script is displaying "Holberton School" 10 times
 string='Holberton School'
 
 for ((c=1; c<=10; c++))
