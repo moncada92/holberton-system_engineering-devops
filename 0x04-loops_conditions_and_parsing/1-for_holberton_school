@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+string='Holberton School'
+
+for ((c=1; c<=10; c++))
+do
+    echo "$string"
+done
