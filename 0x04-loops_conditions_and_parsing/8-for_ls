@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script is displaying files in current directory
+
+list="$(ls)"
+
+for i in $list
+do 
+    echo "$i"
+done 
