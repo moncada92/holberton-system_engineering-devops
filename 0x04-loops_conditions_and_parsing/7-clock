@@ -1,21 +1,19 @@
 #!/usr/bin/env bash
 # This script is displaying oclock numbers
-min=1
-hour=0
 
-echo "Hour: $hour"
-
-while [ $hour -le 24 ]
+i=0
+h=0
+m=0
+while [ $i -le 779 ]
 do
-    echo $min
-
-    if [ $min -eq 59 ]
+    if(( i % 60 == 0 ))
     then
-        ((hour++))
-        echo "Hour: $hour"
-        min=0
+      echo "Hour: $h"
+      m=0
+      ((h++))
+    else
+      echo "$m"
     fi
-    
-    ((min++))
-
+    ((i++))
+    ((m++))
 done
