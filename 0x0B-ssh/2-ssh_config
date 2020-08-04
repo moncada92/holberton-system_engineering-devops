@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#config shh remote
+HOST *
+    IdentityFile ~/.ssh/holberton
+    PasswordAuthentication no
