@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-install nginx, config port and file
+#install nginx, config port and file
 sudo apt-get update
 sudo apt-get install nginx
-#sed -i 's/80/8080/g' /etc/nginx/sites-enabled/default
 echo "Holberton School for the win!" > /var/www/html/index.html
 service nginx start
 
