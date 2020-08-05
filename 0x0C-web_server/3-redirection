@@ -7,5 +7,5 @@ sudo ufw allow 'Nginx HTTP'
 echo "Holberton School" > /var/www/html/index.html
 
 sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
-# start the server
-sudo /etc/init.d/nginx restart
+sudo service nginx reload
+sudo service nginx start
