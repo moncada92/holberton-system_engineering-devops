@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # webstack debuggin 1, restart apache
 
-/etc/init.d/apache2 restart
+service apache2 start
