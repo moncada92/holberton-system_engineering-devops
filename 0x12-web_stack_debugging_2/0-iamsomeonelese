@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#get anme user with whoami
+su "$1" whoami
