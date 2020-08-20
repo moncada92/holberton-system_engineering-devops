@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Configure ufw
 sudo ufw desable
-sudo ed -i 's/IPV6=no/IPV6=yes/g' /etc/default/ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
