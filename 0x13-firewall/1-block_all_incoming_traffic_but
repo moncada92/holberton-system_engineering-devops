@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Configure ufw
 ufw desable
 ufw default deny incoming
 ufw allow 22/tcp
