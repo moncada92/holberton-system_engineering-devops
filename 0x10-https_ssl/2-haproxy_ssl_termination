@@ -7,19 +7,21 @@ global
         user haproxy
         group haproxy
         daemon
+        maxconn 2048
+        tune.ssl.default-dh-param 2048
 
-        # Default SSL material locations                                                                                          
+        # Default SSL material locations                                                                                                                 
         ca-base /etc/ssl/certs
         crt-base /etc/ssl/private
 
-        # Default ciphers to use on SSL-enabled listening sockets.                                                                
-        # For more information, see ciphers(1SSL). This list is from:                                                             
-        #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/                                                      
-        ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+\
-AES:RSA+3DES:!aNULL:!MD5:!DSS
+        # Default ciphers to use on SSL-enabled listening sockets.                                                                                       
+        # For more information, see ciphers(1SSL). This list is from:                                                                                    
+        #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/                                                                             
+        ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD\
+5:!DSS
         ssl-default-bind-options no-sslv3
 
-defaults
+defaults        
         log     global
         mode    http
         option  httplog
@@ -34,12 +36,27 @@ defaults
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
+        option forwardfor
+        option http-server-close
+
 frontend front
+        redirect scheme https code 301 if !{ ssl_fc }
         bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/live/www.camilomoncada.tech/fullchain.pem
         mode http
         default_backend back
+
+frontend www-https
+        bind *:443 ssl crt /etc/haproxy/certs/www.camilomoncada.tech.pem
+        reqadd X-Forwarded-Proto:\ https
+        acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+        use_backend letsencrypt-backend if letsencrypt-acl
+        default_backend back
+
 backend back
-    balance roundrobin
-    server 1665-web-01 34.75.26.100:80 check
-    server 1665-web-02 35.237.221.251:80 check
+        redirect scheme https if !{ ssl_fc }
+        balance roundrobin
+        server 1665-web-01 34.75.26.100:80 check
+        server 1665-web-02 35.237.221.251:80 check
+
+backend letsencrypt-backend
+        server letsencrypt 127.0.0.1:54321
