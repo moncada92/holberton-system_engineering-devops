@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Configure ufw
-sudo apt-get install ufw
+sudo ufw desable
 ssudo ed -i 's/IPV6=no/IPV6=yes/g' /etc/default/ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
-sudo ufw allow 22
-sudo ufw allow 433
-sudo ufw allow 80
+sudo ufw allow 22/tcp
+sudo ufw allow 433/tcp
+sudo ufw allow 80/tcp
 sudo ufw enable
