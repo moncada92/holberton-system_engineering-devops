@@ -24,4 +24,3 @@ def getData(id):
 
 if __name__ == '__main__':
     getData(argv[1])
-
