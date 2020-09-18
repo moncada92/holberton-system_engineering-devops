@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 '''top ten in reddit'''
 
